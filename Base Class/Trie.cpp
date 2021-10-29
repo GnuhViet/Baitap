@@ -1,55 +1,94 @@
 #pragma once
 
+#include "TrieNode.cpp"
 #include <string>
 
-const int ALPHABET_SIZE = 26;
+using namespace std;
 
 class Trie {
 private:
-    Trie *children[ALPHABET_SIZE];
-    bool isEndOfWord;
+    TrieNode *root;
+    
+    /*
+        Returns true if parent should delete the mapping
+    */
+    bool remove(TrieNode *curent, string word, int index) {
+        if (index == word.length()) {
+            //when end of word is reached only delete if currrent.endOfWord is true.
+            if (!curent->isEndOfWord()) {
+                return false;
+            }
+
+            curent->setEndOfWord(false);
+
+            //if current has no other mapping then return true
+            return curent->getChildSize() == 0;
+        }
+
+        char ch = word[index];
+        TrieNode *node = curent->getValue(ch);
+        if (node == nullptr)
+            return false;
+        
+        bool shouldRemoveCurrentNode = remove(node, word, index + 1);
+
+        //if true is returned then delete the mapping of character and trienode reference from map.
+        if (shouldRemoveCurrentNode) {
+            curent->removeValue(ch);
+
+            //return true if no mappings are left in the map.
+            return curent->getChildSize() == 0;
+        }
+        return false;
+    }
+
 public:
     Trie() {
-        isEndOfWord = false;
-        for (int i = 0; i < ALPHABET_SIZE; i++) {
-            children[i] = NULL;
-        }
+        root = new TrieNode();
     }
-    void insert(std::string key);
-    bool search(std::string key);
-    void remove(std::string key);
+
+    void insert(string word);
+    bool search(string word);
+    void remove(string word);
 };
 
-void Trie::insert(std::string key) {
- 
-    Trie *pCrawl = &(*this);
+void Trie::insert(string word) {
+    TrieNode *current = root;
 
-    for (int i = 0; i < key.length(); i++) {
-        int index = key[i] - 'a'; // 0 - 25
+    for (int i = 0; i < word.length(); i++) {
+        char ch = word[i];
 
-        if (!pCrawl->children[index]) // pCrawl->children[index] == NULL 
-            pCrawl->children[index] = new Trie();
-
-        pCrawl = pCrawl->children[index];
+        TrieNode *node = current->getValue(ch);
+        
+        // if key does not exist
+        if (node == nullptr) {
+            node = new TrieNode();
+            current->insertValue(ch, node);
+        }
+        
+        current = node;  
     }
 
-    // mark last node as leaf
-    pCrawl->isEndOfWord = true;
+    //mark the current nodes endOfWord as true
+    current->setEndOfWord(true);
 }
 
 // Returns true if key presents in trie, else false
-bool Trie::search(std::string key) {
-    Trie *pCrawl = &(*this);
+bool Trie::search(string word) {
+    TrieNode *current = root;
+    for (int i = 0; i < word.length(); i ++) {
+        char ch = word[i];
+        TrieNode *node = current->getValue(ch);
 
-    for (int i = 0; i < key.length(); i++) {
-        int index = key[i] - 'a';
-        if (!pCrawl->children[index])
+        //if node does not exist for given char then return false
+        if (node == nullptr)
             return false;
-        pCrawl = pCrawl->children[index];
+        current = node;
     }
-    return (pCrawl->isEndOfWord);
+
+    return current->isEndOfWord();
 }
 
-Trie* remove(std::string key, int depth = 0) {
-    
+void Trie::remove(string word) {
+   remove(root, word, 0); 
 }
