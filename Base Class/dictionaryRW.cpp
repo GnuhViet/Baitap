@@ -1,38 +1,22 @@
-
-# include "Trie.cpp"
-# include <string>
-# include <fstream>
-
-#include <iostream>
-using namespace std;
+#include "Trie.cpp"
+#include <string>
+#include <fstream>
 
 class dictionaryRW {
 public:
-    static void read(Trie *root, string name) {
+    static void read(Trie dict, string name) {
         string data;
         ifstream infile;
-
         infile.open(name);
-        int size = 0;
         while(!infile.eof()) {
             infile >> data;
-            size++;
-            root->insert(data);
+            dict.insert(data);
         }
     }
 
     static void write(string data, string name) {
-        
+        ofstream outfile;
+        outfile.open(name, ios::app);
+        outfile << '\n' + data;
     }
-};
-
-
-int main() {
-    Trie *a = new Trie();
-    dictionaryRW::read(a, "words.txt");
-    a->search("aah")? cout << "Yes\n" :
-                         cout << "No\n";
-
-    a->search("aal")? cout << "Yes\n" :
-                           cout << "No\n";
 };
