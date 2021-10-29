@@ -31,10 +31,8 @@ public:
     TrieNode *getValue(char key) {
         /*
         map::operator[k] 
-        "If k does not match the key of any element 
-        in the container, the function inserts 
-        a new element with that key and 
-        returns a reference to its mapped value."
+        "If k does not match the key of any element in the container, the function inserts 
+        a new element with that key and returns a reference to its mapped value."
 
         => need to find first
         */
@@ -44,12 +42,12 @@ public:
             return nullptr;
     }
 
-    int getChildSize() {
-        return children.size();
-    }
-
     void insertValue(char key, TrieNode *node) {
         children.insert(pair<char,TrieNode*>(key, node));
+    }
+
+    int getChildSize() {
+        return children.size();
     }
 
     void setEndOfWord(bool status) {
