@@ -14,7 +14,18 @@ int main() {
     Trie dict;
     DictionaryFile::read(dict, "words_alpha.txt");
 
+    vector<string> incorrect1 = WordsCheck::check_paragraph(p1, dict);
+    vector<string> incorrect2 = WordsCheck::check_paragraph(p2, dict);
+
+    for (auto it = incorrect1.begin(); it != incorrect1.end(); it++)
+        cout << *it;
+    
+    for (auto it = incorrect2.begin(); it != incorrect2.end(); it++)
+        cout << *it;
     //
+    cout << incorrect1.size() << endl;
+    cout << incorrect2.size() << endl;
+
     dict.search("zulu")? cout << "Yes\n" :
                          cout << "No\n";
 
