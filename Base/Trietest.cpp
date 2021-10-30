@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Trie.cpp"
 #include <iostream>
 

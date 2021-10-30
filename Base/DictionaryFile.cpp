@@ -1,8 +1,13 @@
+#pragma once
+
 #include "Trie.cpp"
+
 #include <string>
 #include <fstream>
 
-class dictionaryRW {
+using namespace std;
+
+class DictionaryFile {
 public:
     static void read(Trie dict, string name) {
         string data;
