@@ -1,7 +1,7 @@
 #pragma once
-
+#include<iostream>
 #include "Trie.cpp"
-
+#include<iostream>
 #include <vector>
 #include <string>
 
@@ -9,48 +9,59 @@ using namespace std;
 
 class WordsCheck{
 public:
-	static vector<string> check_paragraph(string str, Trie dict){
-		vector<string> word;
-		int size=0;//do dai tu
-		int count=0;//so chu viet hoa 
-		string temp;//luu tu tam thoi de cho vao vector
+	/*
+		input: paragraph and a dictionary
+		output: a vector contains words that could be incorrect
+	*/
+	static vector<string> check_paragraph(string paragraph, Trie dict){
+		paragraph += "."; // for the last else can run
+		vector<string> words;
+		int size=0;	    //words length
+		int count=0;	//number of uppercase letter
+		string temp;	//buid the word form A-Z , a-z  or ' in paragraph
 
-		for (int i = 0 ; i < str.length(); ++i) {
-		  	if ( (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= 'a' && str[i] <= 'z' || str[i] == '\'')) {	
-				//luu cac tu thuoc A-Z , a-z va '
-		  		temp += str[i];
+		for (int i = 0; i < paragraph.length(); ++i) {
+		  	
+			// 
+			if ( (paragraph[i] >= 'A' && paragraph[i] <= 'Z') || (paragraph[i] >= 'a' && paragraph[i] <= 'z') || paragraph[i] == 39) {	
+		  		temp += paragraph[i];
 		  		size++;
-		  		if (str[i] >= 'A' && str[i] <= 'Z')
+		  		if (paragraph[i] >= 'A' && paragraph[i] <= 'Z')
 		  			count++;
 			}
 			else {
-				//tat ca cac chu viet hoa
-				if (count == size)
-					if(!dict.search(temp))
-						word.push_back(temp);
-				
-				//co nhieu hon 1 chu viet hoa nhung khong phai tat ca
-				else if (count>1 && count<size)
-					word.push_back(temp);
+				if (size==0)
+					continue;
 
-				//co 1 chu viet hoa nhung khong phai dau tien
-				else if (count==1 && temp[0]>='a' && temp[0]<='z')
-					word.push_back(temp);
-				
-				//co 1 chu viet hoa dau tien hoac khong co chu viet hoa
+				//all is uppercase letter
+				if (count == size){
+					if(!dict.search(temp)){
+						words.push_back(temp);
+					}
+				}
+
+				//more than one uppercase letter
+				else if (count > 1 && count < size)
+					words.push_back(temp);
+
+				//contains uppercase letter, but not the first one
+				else if(count==1 && temp[0]>='a' && temp[0]<='z')
+					words.push_back(temp);
+
+				//first letter is uppercase or none at all
 				else{
-					//chuyen chu hoa sang chu thuong
-					if (temp[0] >= 'A' && temp[0] <= 'Z')
+					//to lowwer case
+					if(temp[0] >= 'A' && temp[0] <= 'Z')
 						temp[0]+=32;
 					if(!dict.search(temp))
-						word.push_back(temp);
-					temp="";
-					count=0;
-					size=0;
+						words.push_back(temp);
 				}
+				temp="";
+				count=0;
+				size=0;
 			}
 		}
-		return word;
+		return words;
 	}
 
 };
