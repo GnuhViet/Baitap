@@ -8,12 +8,20 @@
 using namespace std;
 
 class WordsCheck{
+private:
+	static bool check_character(char x) {
+		return x >= 'A' && x <= 'Z' 
+			|| x >= 'a' && x <= 'z'
+			|| x == 64 
+			|| x == 35 
+			|| x == 36;
+	}
 public:
 	/*
 		input: paragraph and a dictionary
 		output: a vector contains words that could be incorrect
 	*/
-	static vector<string> check_paragraph(string paragraph, Trie dict){
+	static vector<string> check_paragraph(string paragraph, Trie dict) {
 		paragraph += "."; // for the last else can run
 		vector<string> words;
 		int size=0;	    //words length
@@ -23,7 +31,7 @@ public:
 		for (int i = 0; i < paragraph.length(); ++i) {
 		  	
 			// 
-			if ( (paragraph[i] >= 'A' && paragraph[i] <= 'Z') || (paragraph[i] >= 'a' && paragraph[i] <= 'z') ) {	
+			if (check_character(paragraph[i])) {	
 		  		temp += paragraph[i];
 		  		size++;
 		  		if (paragraph[i] >= 'A' && paragraph[i] <= 'Z')
@@ -34,8 +42,8 @@ public:
 					continue;
 
 				//all is uppercase letter
-				if (count == size){
-					if(!dict.search(temp)){
+				if (count == size) {
+					if(!dict.search(temp)) {
 						words.push_back(temp);
 					}
 				}
@@ -55,6 +63,13 @@ public:
 						temp[0]+=32;
 					if(!dict.search(temp))
 						words.push_back(temp);
+				}
+				if ( paragraph[i] == 39) {
+					temp = "";
+					temp += 39;
+					count = 0;
+					size = 1;
+					continue;
 				}
 				temp="";
 				count=0;
