@@ -59,22 +59,26 @@ public:
                             vector<string>::iterator it;
 
                             cout << "--------------------------------" << endl;
-                            cout << "Nhung tu co the sai: " << endl;
-                            for (it = incorrect.begin(), i = 1; it != incorrect.end(); i++, it++)
-                                cout << i << "."<< *it << endl;
-                            cout << "--------------------------------" << endl;
-                            
-                            //aah aahed aahing bahs cal dalii ngusi
-                            while(true) {
-                                cout << "Chon cac tu muon them vao tu dien (nhap so thu tu), nhap -1 de tro lai menu: ";
-                                cin >> i;
-                                if (i == -1)
-                                    break;
-                                i-=1;
-                                DictionaryFile::write(dict, fileName, incorrect.at(i));
-                                cout << i + 1 << "."<< incorrect.at(i) << " da duoc them vao tu dien" << endl;
-                            }
+                            if (incorrect.empty())
+                                cout << "Khong ton tai tu sai" << endl;
+                            else {
+                                cout << "Nhung tu co the sai: " << endl;
+                                for (it = incorrect.begin(), i = 1; it != incorrect.end(); i++, it++)
+                                    cout << i << "."<< *it << endl;
+                                cout << "--------------------------------" << endl;
 
+                                while(true) {
+                                    cout << "Chon cac tu muon them vao tu dien (nhap so thu tu), nhap -1 de tro lai menu: ";
+                                    cin >> i;
+                                    if (i == -1)
+                                        break;
+                                    i-=1;
+                                    DictionaryFile::write(dict, fileName, incorrect.at(i));
+                                    cout << i + 1 << "."<< incorrect.at(i) << " da duoc them vao tu dien" << endl;
+                                }
+                            }
+                            
+                            
                         }
                         else
                             cout << "Chua co tu dien nao duoc nhap";

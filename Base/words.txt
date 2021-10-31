@@ -10,4 +10,5 @@ gam
 hanihanj
 aac
 ngusi
-he's
+he
+'s

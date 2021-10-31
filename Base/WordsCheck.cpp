@@ -23,7 +23,7 @@ public:
 		for (int i = 0; i < paragraph.length(); ++i) {
 		  	
 			// 
-			if ( (paragraph[i] >= 'A' && paragraph[i] <= 'Z') || (paragraph[i] >= 'a' && paragraph[i] <= 'z') || paragraph[i] == 39) {	
+			if ( (paragraph[i] >= 'A' && paragraph[i] <= 'Z') || (paragraph[i] >= 'a' && paragraph[i] <= 'z') ) {	
 		  		temp += paragraph[i];
 		  		size++;
 		  		if (paragraph[i] >= 'A' && paragraph[i] <= 'Z')
