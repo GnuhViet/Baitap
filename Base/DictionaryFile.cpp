@@ -9,7 +9,7 @@ using namespace std;
 
 class DictionaryFile {
 public:
-    static void read(Trie dict, string name) {
+    static void read(Trie &dict, string name) {
         string data;
         ifstream infile;
         infile.open(name, ios::in);
