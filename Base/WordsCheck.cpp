@@ -12,9 +12,9 @@ private:
 	static bool check_character(char x) {
 		return x >= 'A' && x <= 'Z' 
 			|| x >= 'a' && x <= 'z'
-			|| x == 64 
-			|| x == 35 
-			|| x == 36;
+			|| x == 64 // @ 
+			|| x == 35 // #
+			|| x == 36;// $
 	}
 public:
 	/*
