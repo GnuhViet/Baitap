@@ -46,7 +46,7 @@ public:
     Trie() {
         root = new TrieNode();
     }
-
+    
     void insert(string word);
     bool search(string word);
     void remove(string word);
