@@ -19,11 +19,6 @@ public:
         endOfWord = false;
     }
 
-    ~TrieNode() {
-        for (auto it=children.begin(); it!=children.end(); ++it)
-            delete it->second;
-    }
-
     void removeValue(char key) {
         children.erase(key);
     }
