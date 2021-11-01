@@ -19,11 +19,6 @@ public:
         endOfWord = false;
     }
 
-    TrieNode(char key) {
-        TrieNode *temp = new TrieNode();
-        children.insert(pair<char,TrieNode*>(key, temp));
-    }
-
     void removeValue(char key) {
         children.erase(key);
     }
